@@ -1,0 +1,195 @@
+<!DOCTYPE HTML>
+<!--
+	Projection by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+<head>
+		<title>Solder.cf verifier</title>
+		<script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+		<link rel="icon" href="./images/solderIcon.png" type="image/png" />
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="google-site-verification" content="I38a7nSQkNeKK-IiyZqmKz_hjEFwwhq0tSTWOuLsxgQ" />
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-77751067-6"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+
+		  gtag('config', 'UA-77751067-6');
+		</script>
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="manifest" href="/manifest.json" />
+		<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+		<script>
+		  var OneSignal = window.OneSignal || [];
+		  OneSignal.push(function() {
+		    OneSignal.init({
+		      appId: "bef98883-5d37-4dc3-a056-833fa74075e3",
+		    });
+		  });
+		</script>
+		<style type="text/css">
+			pre {
+				white-space: pre-wrap;
+				white-space: -moz-pre-wrap;
+				white-space: -pre-wrap;
+				white-space: -o-pre-wrap;
+				word-wrap: break-word;
+			}
+		</style>
+	</head>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/5ba3d4c8c666d426648af4bc/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+	<body class="subpage">
+
+		<!-- Header -->
+			<header id="header">
+				<div class="inner">
+					<a href="index.html" class="logo">Technic Solder <strong>Solder.cf</strong></a>
+					<nav id="nav">
+						<a href="index.html">Home</a>
+						<a href="verify.html">Solder verifier</a>
+						<a href="https://github.com/TheGameSpider/TechnicSolder">GitHub</a>
+						<a target="_blank" href="https://discord.gg/RfeQqxe">Discord</a>
+					</nav>
+					<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+				</div>
+			</header>
+
+		<!-- Main -->
+			<section id="main" class="wrapper">
+				<div class="inner">
+					<header class="align-center">
+						<h2>Solder verifier</h2>
+					</header>
+					<hr class="major" />
+					<h2 id="content">Insert Modpack slug and we will get as much informaion as we can.</h2>
+					<p>What is Modpack slug?</p>
+					<div class="row uniform">
+						<div class="9u 12u$(small)">
+							<input type="text" id="link" placeholder="Modpack slug" />
+						</div>
+						<div class="3u$ 12u$(small)">
+							<input type="submit" onclick="get();" value="Search" class="fit" />
+						</div>
+						<pre style="width: 100%"><code id="responseRaw">
+						</code></pre>
+						<h3>Response from Technic API:<br /></h3>
+						<div id="response" style="width: 100%">
+							<span id="solder"></span>
+							<div id="responseR"></div>
+							<div id="feed"></div>
+						</div>
+					</div>
+					<script type="text/javascript">
+						function get(){
+							console.log("working");
+							var link = document.getElementById("link").value;
+							var request = new XMLHttpRequest();
+							request.onreadystatechange = function() {
+								if (this.readyState == 4 && this.status == 200) {
+									response = request.responseText;
+									console.log(response);
+									var code = document.getElementById("responseRaw");
+									var responseDIV = document.getElementById("responseR");
+									var feedDIV = document.getElementById("feed");
+									var solderInfoDIV = document.getElementById("solderInfo");
+									var solderDIV = document.getElementById("solder");
+									code.innerHTML = response;
+									responseObj = JSON.parse(response);
+									if(responseObj.error=="Modpack does not exist") {
+										responseDIV.innerHTML = "<b>This modpack does not exists</b>";
+									} else {
+										if(responseObj.solder!==null) {
+											solderRequest = new XMLHttpRequest();
+											console.log("Getting info from solder");
+											solderRequest.onreadystatechange = function() {
+												if (this.readyState == 4 && this.status == 200) {
+													solderRaw = solderRequest.responseText;
+													solder = JSON.parse(solderRaw);
+													var solderDIV = document.getElementById("solder");
+													solderDIV.innerHTML = "<b style='color:green'>This modpack is using Solder API - "+solder.api+" "+solder.version+" "+solder.stream+"</b>";
+													console.log(solderRaw);
+													console.log("done");
+												}
+											}
+											solderRequest.open("GET", "http://tgsapi.8u.cz/resolder.php?link="+responseObj.solder);
+											solderRequest.send();
+											
+										} else {
+											solderDIV.innerHTML = "<b style='color:red'>This modpack is not using Solder API</b>";
+										}
+										responseDIV.innerHTML = "<br /><b>Modpack Name: </b>"+responseObj.displayName;
+										responseDIV.innerHTML += "<br /><b>Author: </b>"+responseObj.user;
+										responseDIV.innerHTML += "<br /><b>Minecraft Version: </b>"+responseObj.minecraft;
+										responseDIV.innerHTML += "<br /><b>Downloads: </b>"+responseObj.downloads;
+										responseDIV.innerHTML += "<br /><b>Runs: </b>"+responseObj.runs;
+										responseDIV.innerHTML += "<br /><b>Official Modpack: </b>"+responseObj.isOfficial;
+										responseDIV.innerHTML += "<br /><b>Server Modpack: </b>"+responseObj.isServer;
+										responseDIV.innerHTML += "<br /><b>Platform Site: </b><a target='_blank' href='"+responseObj.platformUrl+"'>"+responseObj.platformUrl+"</a>";
+										if(responseObj.url!==null) {
+											responseDIV.innerHTML += "<br /><b>Download Link: </b><a target='_blank' href='"+responseObj.url+"'>"+responseObj.url+"</a>";
+										}
+										if(responseObj.solder!==null) {
+											responseDIV.innerHTML += "<br /><b>Solder API: </b><a target='_blank' href='"+responseObj.solder+"'>"+responseObj.solder+"</a>";
+										}
+										responseDIV.innerHTML += "<br /><b>Description: </b>"+responseObj.description
+										if(responseObj.discordServerId!=="") {
+											responseDIV.innerHTML += "<br /><iframe src='https://discordapp.com/widget?id="+responseObj.discordServerId+"&theme=dark' width='350' height='500' allowtransparency='true' frameborder='0'></iframe>";
+										}
+										feedDIV.innerHTML = "<h3>Updates: </h3>"
+										i=0;
+										responseObj.feed.forEach(element => {
+											i++
+											document.getElementById("feed").innerHTML += "<div style='height:200px;overflow:hidden;margin:1%;padding:5px;width:30%;float:left;border: 1px solid black;border-radius: 5px'><img src='"+element.avatar+"' height='16px' /><b> "+element.user+"</b><br /><p>"+element.content+"</p></div>";
+										});
+										if(i==0) {
+											feedDIV.innerHTML = "";
+										}
+									}
+								}
+							};
+							request.open("GET", "http://tgsapi.8u.cz/platform.php?slug="+link);
+							request.send();
+						}
+					</script>
+				</div>
+			</section>
+
+		<!-- Footer -->
+			<footer id="footer" style="padding:3em;">
+				<div class="inner">
+					<div class="copyright">
+						&copy; TheGameSpider. Design: <a href="https://templated.co">TEMPLATED</a>.<br>
+						<a href="https://technicpack.net" target="_blank">Technic Logo</a> under <a target="_blank" href="https://github.com/TechnicPack/TechnicSolder/blob/master/LICENSE">MIT licence</a>
+					</div>
+
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
