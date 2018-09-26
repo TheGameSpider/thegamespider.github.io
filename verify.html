@@ -6,6 +6,11 @@
 -->
 <html>
 <head>
+		<script type="text/javascript">
+			if (location.protocol != 'http:') {
+				location.href = 'http:' + window.location.href.substring(window.location.protocol.length);
+			}
+		</script>
 		<title>Solder.cf verifier</title>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
