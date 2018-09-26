@@ -7,9 +7,9 @@
 <html>
 <head>
 		<script type="text/javascript">
-			alert(location.protocol);
+			
 			if (location.protocol != 'http:') {
-				location.href = 'http:' + window.location.href.substring(window.location.protocol.length);
+				alert("Sorry. This Verifier is not compatible with HTTPS. If you want to use it, you have to download it as html file (Crtl + S) and open it in your browser.");
 			}
 		</script>
 		<title>Solder.cf verifier</title>
