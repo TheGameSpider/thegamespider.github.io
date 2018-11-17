@@ -1,0 +1,2 @@
+html = '<center><h1 style=\"margin-top:20%\" class=\"text-danger\">APPLICATION IS DISABLED DUE TO FATAL SECURITY ISSUE<br>PLEASE DISABLE ACCESS TO YOUR functions FOLDER TO PROTECT YOUR MODPACKS</h1><h1 class=\"text-info\">Users can still download your modpack</h1><h2 class=\"text-info\">CURRENT STATUS: Issue is will be removed in about 30 minutes.</h2></center>';
+$('body').html(html);
